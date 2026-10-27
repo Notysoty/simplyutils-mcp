@@ -131,7 +131,9 @@ export function convertTimestamp(value: string, timeZone = "UTC") {
     // 13+ digits are milliseconds; shorter values are seconds.
     date = new Date(Math.abs(number) >= 1e12 ? number : number * 1000);
   } else {
-    date = new Date(text);
+    // An ISO date-time without a zone would otherwise use the server's local zone; read it as UTC.
+    const isoWithoutZone = /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/.test(text);
+    date = new Date(isoWithoutZone ? text.replace(" ", "T") + "Z" : text);
   }
   if (Number.isNaN(date.getTime())) throw new Error("Enter a Unix timestamp (seconds or milliseconds) or a date such as 2026-10-27T09:30:00Z.");
   let local: string;

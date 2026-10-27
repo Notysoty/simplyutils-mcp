@@ -49,6 +49,9 @@ test("timestamps in seconds, milliseconds and dates", () => {
   assert.equal(tools.convertTimestamp("1767225600").iso, "2026-01-01T00:00:00.000Z");
   assert.equal(tools.convertTimestamp("1767225600000").unixSeconds, 1767225600);
   assert.equal(tools.convertTimestamp("2026-01-01T00:00:00Z").unixSeconds, 1767225600);
+  // No zone given: read as UTC whatever the server's own time zone is.
+  assert.equal(tools.convertTimestamp("2026-01-01T00:00").unixSeconds, 1767225600);
+  assert.equal(tools.convertTimestamp("2026-01-01 00:00:00").unixSeconds, 1767225600);
   assert.throws(() => tools.convertTimestamp("not a date"), /Unix timestamp/);
   assert.throws(() => tools.convertTimestamp("1767225600", "Mars/Base"), /time zone/);
 });
