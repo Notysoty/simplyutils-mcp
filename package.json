@@ -47,7 +47,7 @@
   "homepage": "https://simplyutils.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Notysoty/simplyutils-mcp.git"
+    "url": "git+https://github.com/Notysoty/simplyutils-mcp.git"
   },
   "engines": {
     "node": ">=20"
