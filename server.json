@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "io.github.Notysoty/simplyutils-mcp",
   "title": "SimplyUtils",
-  "description": "Everyday developer and text tools: JSON formatter, QR codes, unit converter, passwords, UUIDs, hashes, Base64, regex tester, timestamps and word counts.",
+  "description": "Developer and text tools: JSON, QR codes, units, passwords, UUIDs, hashes, Base64, regex and more.",
   "websiteUrl": "https://simplyutils.com",
   "repository": {
     "url": "https://github.com/Notysoty/simplyutils-mcp",
