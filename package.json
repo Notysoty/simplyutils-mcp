@@ -51,5 +51,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "mcpName": "io.github.Notysoty/simplyutils-mcp"
 }
