@@ -3,12 +3,12 @@
   "name": "io.github.Notysoty/simplyutils-mcp",
   "title": "SimplyUtils",
   "description": "Developer and text tools: JSON, QR codes, units, passwords, UUIDs, hashes, Base64, regex and more.",
-  "websiteUrl": "https://simplyutils.com",
+  "websiteUrl": "https://simplyutils.com/mcp-server",
   "repository": {
     "url": "https://github.com/Notysoty/simplyutils-mcp",
     "source": "github"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "remotes": [
     {
       "type": "streamable-http",
@@ -19,7 +19,7 @@
     {
       "registryType": "npm",
       "identifier": "simplyutils-mcp",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "transport": {
         "type": "stdio"
       }

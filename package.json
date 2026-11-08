@@ -1,6 +1,6 @@
 {
   "name": "simplyutils-mcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MCP server with everyday developer and text tools from SimplyUtils: JSON formatter, QR codes, unit converter, passwords, UUIDs, hashes, Base64, regex tester, timestamps and word counts.",
   "main": "dist/server.js",
   "scripts": {
@@ -44,7 +44,7 @@
     "README.md",
     "LICENSE"
   ],
-  "homepage": "https://simplyutils.com",
+  "homepage": "https://simplyutils.com/mcp-server",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Notysoty/simplyutils-mcp.git"

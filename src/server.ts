@@ -14,7 +14,7 @@ async function run(slug: string, work: () => Promise<string> | string) {
 
 export function createServer() {
   const server = new McpServer(
-    { name: "simplyutils", title: "SimplyUtils", version: "1.0.2", websiteUrl: tools.SITE },
+    { name: "simplyutils", title: "SimplyUtils", version: "1.0.3", websiteUrl: `${tools.SITE}/mcp-server` },
     { instructions: "Everyday developer and text utilities from SimplyUtils (simplyutils.com). Results are computed directly, with no AI and no external lookups. Each answer links to the matching free tool on simplyutils.com." },
   );
 

@@ -2,6 +2,8 @@
 
 Everyday developer and text tools from [SimplyUtils](https://simplyutils.com) for Claude, ChatGPT, Cursor and any other [Model Context Protocol](https://modelcontextprotocol.io) client.
 
+**Setup guide for ChatGPT, Claude, Claude Code, VS Code and Cursor: [simplyutils.com/mcp-server](https://simplyutils.com/mcp-server)**
+
 Ask things like *"format this JSON"*, *"make a QR code for https://example.com"*, *"convert 5 miles to km"* or *"test this regex against my log line"*. The answers are computed directly: no AI calls, no external lookups, and nothing is stored. Each answer links to the matching free tool on simplyutils.com, where you can do more with it.
 
 ## Tools
