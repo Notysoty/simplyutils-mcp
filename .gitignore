@@ -2,3 +2,6 @@ node_modules/
 dist/
 *.log
 .env
+
+# Registry publishing tool (download from the MCP registry releases)
+mcp-publisher.exe
