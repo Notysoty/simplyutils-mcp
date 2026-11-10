@@ -14,7 +14,7 @@ async function run(slug: string, work: () => Promise<string> | string) {
 
 export function createServer() {
   const server = new McpServer(
-    { name: "simplyutils", title: "SimplyUtils", version: "1.0.3", websiteUrl: `${tools.SITE}/mcp-server` },
+    { name: "simplyutils", title: "SimplyUtils", version: "1.0.4", websiteUrl: `${tools.SITE}/mcp-server` },
     { instructions: "Everyday developer and text utilities from SimplyUtils (simplyutils.com). Results are computed directly, with no AI and no external lookups. Each answer links to the matching free tool on simplyutils.com." },
   );
 
@@ -26,7 +26,7 @@ export function createServer() {
       indent: z.enum(["2", "4", "tab", "minify"]).default("2").describe("2 or 4 spaces, a tab, or minify to remove all whitespace"),
       sortKeys: z.boolean().default(false).describe("Sort object keys alphabetically at every level"),
     },
-    annotations: readOnly,
+    annotations: { title: "Format or minify JSON", ...readOnly },
   }, ({ json, indent, sortKeys }) => run("json-formatter", () => tools.formatJson(json, indent, sortKeys)));
 
   server.registerTool("generate_qr_code", {
@@ -38,7 +38,7 @@ export function createServer() {
       foreground: z.string().default("#000000").describe("Six-digit hex color for the modules"),
       background: z.string().default("#ffffff").describe("Six-digit hex color for the background"),
     },
-    annotations: readOnly,
+    annotations: { title: "Generate a QR code", ...readOnly },
   }, async ({ text: value, errorCorrection, foreground, background }) => {
     try {
       const { svg, pngBase64 } = await tools.qrCode(value, errorCorrection, foreground, background);
@@ -58,7 +58,7 @@ export function createServer() {
       from: z.string().describe("Unit symbol or name, e.g. km or kilometer"),
       to: z.string().describe("Unit symbol or name, e.g. mi or mile"),
     },
-    annotations: readOnly,
+    annotations: { title: "Convert units", ...readOnly },
   }, ({ value, category, from, to }) => run("unit-converter", () => tools.convertUnits(value, category as never, from, to).text));
 
   server.registerTool("generate_password", {
@@ -72,14 +72,14 @@ export function createServer() {
       numbers: z.boolean().default(true).describe("Include 0-9"),
       symbols: z.boolean().default(true).describe("Include symbols such as !@#$%^&*"),
     },
-    annotations: { ...readOnly, idempotentHint: false },
+    annotations: { title: "Generate strong passwords", ...readOnly, idempotentHint: false },
   }, ({ length, count, ...sets }) => run("password-generator", () => tools.generatePasswords(length, count, sets).join("\n")));
 
   server.registerTool("generate_uuid", {
     title: "Generate UUIDs",
     description: "Generate random version 4 UUIDs (RFC 9562) in lowercase 8-4-4-4-12 form, one per line. Every call gives new values.",
     inputSchema: { count: z.number().int().min(1).max(50).default(1).describe("How many UUIDs to generate, 1-50") },
-    annotations: { ...readOnly, idempotentHint: false },
+    annotations: { title: "Generate UUIDs", ...readOnly, idempotentHint: false },
   }, ({ count }) => run("uuid-generator", () => tools.generateUuids(count).join("\n")));
 
   server.registerTool("hash_text", {
@@ -89,7 +89,7 @@ export function createServer() {
       text: z.string().describe("The exact text to hash; spaces and line breaks change the result"),
       algorithm: z.enum(["md5", "sha1", "sha256", "sha384", "sha512"]).default("sha256").describe("Hash algorithm; sha256 is the usual choice"),
     },
-    annotations: readOnly,
+    annotations: { title: "Hash text", ...readOnly },
   }, ({ text: value, algorithm }) => run("hash-generator", () => `${algorithm}: ${tools.hashText(value, algorithm)}`));
 
   server.registerTool("base64", {
@@ -100,7 +100,7 @@ export function createServer() {
       mode: z.enum(["encode", "decode"]).describe("encode: text to Base64; decode: Base64 to text"),
       urlSafe: z.boolean().default(false).describe("When encoding, use - and _ and drop = padding (for URLs and JWTs)"),
     },
-    annotations: readOnly,
+    annotations: { title: "Base64 encode or decode", ...readOnly },
   }, ({ text: value, mode, urlSafe }) => run("base64", () => tools.base64(value, mode, urlSafe)));
 
   server.registerTool("test_regex", {
@@ -111,7 +111,7 @@ export function createServer() {
       flags: z.string().default("g").describe("Any of d, g, i, m, s, u, v, y; for example gi for case-insensitive"),
       text: z.string().describe("The text to search"),
     },
-    annotations: readOnly,
+    annotations: { title: "Test a regular expression", ...readOnly },
   }, ({ pattern, flags, text: value }) => run("regex-tester", () => {
     const matches = tools.testRegex(pattern, flags, value);
     if (!matches.length) return "No matches.";
@@ -123,7 +123,7 @@ export function createServer() {
     title: "Convert a Unix timestamp or date",
     description: "Convert a Unix timestamp or a date to Unix seconds, Unix milliseconds, ISO 8601 (UTC), an HTTP-style UTC string and a readable date in the chosen time zone. Numbers with 13 or more digits are read as milliseconds, shorter ones as seconds. Dates without a time zone are read as UTC. Errors are returned for unreadable dates and unknown time zones.",
     inputSchema: { value: z.string().describe("e.g. 1767225600 or 2026-10-27T09:30:00Z"), timeZone: z.string().default("UTC").describe("IANA time zone, e.g. Asia/Kolkata") },
-    annotations: readOnly,
+    annotations: { title: "Convert a Unix timestamp or date", ...readOnly },
   }, ({ value, timeZone }) => run("timestamp-converter", () => {
     const r = tools.convertTimestamp(value, timeZone);
     return `Unix seconds: ${r.unixSeconds}\nUnix milliseconds: ${r.unixMilliseconds}\nISO 8601: ${r.iso}\nUTC: ${r.utc}\n${r.timeZone}: ${r.local}`;
@@ -133,7 +133,7 @@ export function createServer() {
     title: "Count words and characters",
     description: "Count words, characters (with and without spaces), sentences and paragraphs, and estimate reading time at 238 words per minute. Words are runs of letters or digits in any language; hyphenated words and contractions count once. Paragraphs are separated by blank lines. Input up to 100 KB.",
     inputSchema: { text: z.string().describe("The text to analyze") },
-    annotations: readOnly,
+    annotations: { title: "Count words and characters", ...readOnly },
   }, ({ text: value }) => run("word-counter", () => {
     const r = tools.countWords(value);
     return `Words: ${r.words}\nCharacters: ${r.characters}\nCharacters (no spaces): ${r.charactersWithoutSpaces}\nSentences: ${r.sentences}\nParagraphs: ${r.paragraphs}\nReading time: about ${r.readingTimeMinutes} min`;
